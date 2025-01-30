@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { AuthProvider } from './AuthContext';
+import { NotesProvider } from './NotesContext';
+import Login from './components/Login';
+import Register from './components/Register';
+import NotesList from './components/NotesList';
+import CreateNote from './components/CreateNote';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <NotesProvider>
+        <div className="App">
+          <h1>Aplikasi Catatan</h1>
+          <Login />
+          <Register />
+          <NotesList />
+          <CreateNote />
+        </div>
+      </NotesProvider>
+    </AuthProvider>
   );
 }
 
