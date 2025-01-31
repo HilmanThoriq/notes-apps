@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000', 
+  baseURL: 'https://gdgoc-noteapp.my.id/', 
   headers: {
     'Accept': 'application/json', // memastikan backend mengembalikan respon JSON 
   },
 });
 
-// Tambahkan interceptor request untuk menyertakan token di header Authorization
+// menambahkan interceptor request untuk menyertakan token di header Authorization
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('auth_token');
