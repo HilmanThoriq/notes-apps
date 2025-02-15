@@ -1,16 +1,17 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'https://gdgoc-noteapp.my.id/', 
+  baseURL: 'https://gdgoc-noteapp.my.id/',
   headers: {
     'Accept': 'application/json', // memastikan backend mengembalikan respon JSON 
   },
 });
 
-// menambahkan interceptor request untuk menyertakan token di header Authorization
+// Menambahkan interceptor request untuk menyertakan token di header Authorization
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('auth_token');
+    console.log('Current token:', token);  // Debugging
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -18,8 +19,35 @@ apiClient.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
+  },
+  (response) => response,
+  (error) => {
+    console.log('API Error:', {
+      config: error.config,
+      response: error.response,
+      message: error.message
+    });
+    return Promise.reject(error);
   }
 );
+
+// Fungsi untuk mengunggah dokumen
+export const uploadDocument = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const response = await apiClient.post('/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data.url; // Sesuaikan dengan struktur respons dari server
+  } catch (error) {
+    console.error('Error uploading document:', error);
+    throw error; // Lempar error agar bisa ditangani di tempat lain
+  }
+};
 
 // Fungsi autentikasi
 export const registerUser = (userData) => {
@@ -31,39 +59,87 @@ export const loginUser = (credentials) => {
 };
 
 export const logoutUser = () => {
-  return apiClient.post('/logout');
+  const token = localStorage.getItem('auth_token');
+  return apiClient.post('/logout', {}, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
 };
 
 // Fungsi catatan
 export const getNotes = () => {
-  return apiClient.get('/notes');
+  const token = localStorage.getItem('auth_token');
+  return apiClient.get('/notes', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
 };
 
-export const createNote = (noteData) => {
-  return apiClient.post('/notes', noteData);
+export const createNote = async (noteData) => {
+  const token = localStorage.getItem('auth_token');
+  return apiClient.post('/notes', noteData, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
 };
 
 export const getNoteById = (noteId) => {
-  return apiClient.get(`/notes/${noteId}`);
+  const token = localStorage.getItem('auth_token');
+  return apiClient.get(`/notes/${noteId}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
 };
 
 export const updateNote = (noteId, noteData) => {
-  return apiClient.put(`/notes/${noteId}`, noteData);
+  const token = localStorage.getItem('auth_token');
+  return apiClient.put(`/notes/${noteId}`, noteData, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
 };
 
 export const deleteNote = (noteId) => {
-  return apiClient.delete(`/notes/${noteId}`);
+  const token = localStorage.getItem('auth_token');
+  return apiClient.delete(`/notes/${noteId}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
 };
 
 // Fungsi berbagi
 export const shareNote = (noteId, shareData) => {
-  return apiClient.post(`/notes/${noteId}/share`, shareData);
+  const token = localStorage.getItem('auth_token');
+  return apiClient.post(`/notes/${noteId}/share`, shareData, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
 };
 
 export const getSharedNotes = () => {
-  return apiClient.get('/notes/shared');
+  const token = localStorage.getItem('auth_token');
+  return apiClient.get('/notes/shared', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
 };
 
 export const revokeShare = (noteId, shareId) => {
-  return apiClient.delete(`/notes/${noteId}/share/${shareId}`);
+  const token = localStorage.getItem('auth_token');
+  return apiClient.delete(`/notes/${noteId}/share/${shareId}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
 };
+
+export default apiClient;

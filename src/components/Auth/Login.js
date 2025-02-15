@@ -1,21 +1,22 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../AuthContext';
 import { useNavigate } from 'react-router-dom';
-import loginImage from '../../images/login.png'; 
+import loginImage from '../../images/login.png';
 import gdgLogo from '../../images/gdg_logo.jpg';
-import Swal from 'sweetalert2';   
-import '../Poppins.css'; 
+import Swal from 'sweetalert2';
+import '../Poppins.css';
+import { FaLinode } from 'react-icons/fa';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Notes Apps | Login"; 
-    const link = document.querySelector("link[rel~='icon']"); 
+    document.title = "Notes Apps | Login";
+    const link = document.querySelector("link[rel~='icon']");
     if (link) {
       link.href = gdgLogo;
     }
@@ -29,27 +30,29 @@ const Login = () => {
     } catch (error) {
       Swal.fire({
         icon: 'error',
-        title: 'Login Gagal',
-        text: 'Silakan periksa kredensial Anda.',
+        title: 'Login Failed',
+        html: `<div style="margin-bottom: 24px;"><span>Oops! Looks like the email or password you entered is incorrect. Please try again.</span></div>`,
+        showConfirmButton: false,
+        timer: 1500
       });
     }
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); 
+    setShowPassword(!showPassword);
   };
 
   return (
     <div className="font-poppins max-sm:px-4">
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="grid pt-6 md:grid-cols-2 items-center gap-4 max-md:gap-8 max-w-6xl max-md:max-w-lg w-full px-4 mx-4 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md">
+        <div className="grid pt-6 md:grid-cols-2 items-center gap-4 max-md:gap-8 max-w-6xl max-md:max-w-lg w-full px-4 mx-4 ">
           <div className="md:max-w-md w-full px-4 py-4 md:ml-12">
-            <h1 className="text-gray-800 text-4xl font-extrabold mb-8 text-center">Notes Apps</h1>
             <form onSubmit={handleSubmit}>
               <div className="mb-8">
+                <h1 className="text-gray-800 text-4xl font-extrabold mb-8 text-center">Notes Apps</h1>
                 <h3 className="text-gray-800 text-3xl font-bold">Login</h3>
                 <p className="text-sm mt-4 text-gray-800">
-                  Don't have an account? 
+                  Don't have an account?
                   <a href="/register" className="text-[#D268CC] hover:underline font-semibold  ml-1 whitespace-nowrap">Register here</a>
                 </p>
               </div>

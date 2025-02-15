@@ -1,0 +1,59 @@
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+/* Ensure buttons take full width on smaller screens */
+@media (max-width: 1024px) {
+  .sort-buttons button {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .action-buttons a {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}
+
+/* Ensure buttons are in a single row on larger screens */
+@media (min-width: 1024px) {
+  .sort-buttons {
+    flex-direction: row;
+  }
+
+  .action-buttons {
+    flex-direction: row;
+  }
+}
+
+.select__control {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.select__control:hover {
+  border-color: #a0aec0;
+}
+
+.select__control--is-focused {
+  border-color: #6574cd;
+  box-shadow: 0 0 0 1px #6574cd;
+}
+
+.select__single-value {
+  color: #4a5568;
+}
+
+.select__placeholder {
+  color: #a0aec0;
+}
+
+.custom-mt{
+  margin-top: 18px !important;
+}

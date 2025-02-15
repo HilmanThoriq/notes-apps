@@ -76,8 +76,8 @@ function Register() {
 
   return (
     <div className="font-poppins my-5 max-sm:px-4 sm:my-0 ">
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="grid pt-6 md:grid-cols-2 items-center gap-4 max-md:gap-8 max-w-6xl max-md:max-w-lg w-full px-4 mx-4 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md">
+      <div className="max-h-screen sm:min-h-screen flex flex-col items-center justify-center">
+        <div className="grid pt-6 md:grid-cols-2 items-center gap-4 max-md:gap-8 max-w-6xl max-md:max-w-lg w-full px-4 mx-4">
           <div className="hidden md:block w-full h-full flex items-center rounded-xl">
             <img src={loginImage} className="w-full aspect-[10/12] object-contain" alt="login-image" />
           </div>
@@ -199,7 +199,7 @@ function Register() {
                 </div>
               </div>
 
-              <div className="mt-12">
+              <div className="mt-10">
                 <button type="submit" className="w-full shadow-xl py-2.5 px-4 mb-6 text-m font-extrabold tracking-wide rounded-md text-white focus:outline-none bg-[#E7A5E2] hover:bg-[#D268CC]">
                   Register
                 </button>
